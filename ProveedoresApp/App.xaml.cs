@@ -1,4 +1,6 @@
-﻿namespace ProveedoresApp
+﻿using ProveedoresApp.Views;
+
+namespace ProveedoresApp
 {
     public partial class App : Application
     {
@@ -6,7 +8,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new ProveedorView();
         }
     }
 }
