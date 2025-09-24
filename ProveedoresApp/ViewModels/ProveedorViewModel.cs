@@ -46,7 +46,33 @@ namespace ProveedoresApp.ViewModels
         {
             try
             {
-              
+
+                // Validaciones de campos vacíos
+                if (string.IsNullOrWhiteSpace(ProveedorSeleccionado.Nombre))
+                {
+                    Alerta("El campo 'Nombre' es obligatorio.");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(ProveedorSeleccionado.Direccion))
+                {
+                    Alerta("El campo 'Dirección' es obligatorio.");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(ProveedorSeleccionado.Telefono))
+                {
+                    Alerta("El campo 'Teléfono' es obligatorio.");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(ProveedorSeleccionado.Email))
+                {
+                    Alerta("El campo 'Email' es obligatorio.");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(ProveedorSeleccionado.Productos))
+                {
+                    Alerta("El campo 'Productos' es obligatorio.");
+                    return;
+                }
 
                 if (ProveedorSeleccionado.Id == 0)
                 {
