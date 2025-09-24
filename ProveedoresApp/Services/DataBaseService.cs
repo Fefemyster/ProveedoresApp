@@ -14,27 +14,26 @@ namespace ProveedoresApp.Services
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Productos.db3");
             _db = new SQLiteAsyncConnection(dbPath);
             _db.CreateTableAsync<Proveedor>();
-
         }
 
-        public Task<int> CreateProveedor(Proveedor proveedor)
+        public async Task<int> CreateProveedor(Proveedor proveedor)
         {
-            throw new NotImplementedException();
+            return await _db.InsertAsync(proveedor);
         }
 
-        public Task<int> DeleteProveedor(int id)
+        public async Task<int> DeleteProveedor(int id)
         {
-            throw new NotImplementedException();
+            return await _db.DeleteAsync<Proveedor>(id);
         }
 
-        public Task<List<Proveedor>> GetAllProveedores()
+        public async Task<List<Proveedor>> GetAllProveedores()
         {
-            throw new NotImplementedException();
+            return await _db.Table<Proveedor>().ToListAsync();
         }
 
-        public Task<int> UpdateProveedor(Proveedor proveedor)
+        public async Task<int> UpdateProveedor(Proveedor proveedor)
         {
-            throw new NotImplementedException();
+            return await _db.UpdateAsync(proveedor);
         }
     }
 }
