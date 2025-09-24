@@ -9,7 +9,7 @@ namespace ProveedoresApp.ViewModels
     public partial class ProveedorViewModel : ObservableObject
     {
 
-        private readonly IDataBaseService _dbService;
+        private DataBaseService _dbService;
 
 
         [ObservableProperty]
@@ -19,12 +19,16 @@ namespace ProveedoresApp.ViewModels
         [ObservableProperty]
         private ObservableCollection<Proveedor> _proveedoresCollection;
 
-        public ProveedorViewModel(IDataBaseService dbService)
+        
+
+        public ProveedorViewModel()
         {
-            _dbService = dbService;
+            _dbService = new DataBaseService();
             ProveedoresCollection = new ObservableCollection<Proveedor>();
             LoadProveedoresCommand.ExecuteAsync(null);
+            ProveedorSeleccionado = new Proveedor();
         }
+
 
         [RelayCommand]
         public async Task LoadProveedores()
@@ -40,17 +44,28 @@ namespace ProveedoresApp.ViewModels
         [RelayCommand]
         private async Task GuardarProveedor()
         {
-            if (ProveedorSeleccionado.Id == 0)
+            try
             {
-                await _dbService.CreateProveedor(ProveedorSeleccionado);
-            }
-            else
-            {
-                await _dbService.UpdateProveedor(ProveedorSeleccionado);
-            }
+              
 
-            await LoadProveedores();
-            ProveedorSeleccionado = new Proveedor(); // Limpiar el formulario
+                if (ProveedorSeleccionado.Id == 0)
+                {
+                    await _dbService.CreateProveedor(ProveedorSeleccionado);
+                }
+                else
+                {
+                    await _dbService.UpdateProveedor(ProveedorSeleccionado);
+                }
+
+                await LoadProveedores();
+                ProveedorSeleccionado = new Proveedor(); // Limpiar el formulario
+            }
+            catch(Exception ex)
+            {
+                // Manejo de errores (puedes mostrar un mensaje al usuario, etc.)
+                Alerta($"Ha ocurrido un error: {ex.Message}");
+            }
+            
 
         }
 
@@ -70,5 +85,11 @@ namespace ProveedoresApp.ViewModels
                 ProveedorSeleccionado = new Proveedor(); // Limpiar el formulario
             }
         }
+
+        private void Alerta(string mensaje)
+        {
+            Application.Current!.MainPage!.DisplayAlert("", mensaje, "Aceptar");
+        }
+
     }
 }

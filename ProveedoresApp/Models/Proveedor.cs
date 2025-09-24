@@ -18,5 +18,8 @@ namespace ProveedoresApp.Models
         [NotNull]
         public string Email { get; set; }
 
+        [NotNull]
+        public string Productos { get; set; }
+
     }
 }

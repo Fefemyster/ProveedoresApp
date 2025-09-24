@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:ProveedoresApp.ViewModels"
+             xmlns:models="clr-namespace:ProveedoresApp.Models"
              x:Class="ProveedoresApp.Views.ProveedorView"
              Title="ProveedorView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+    <ContentPage.BindingContext>
+        <viewModels:ProveedorViewModel />
+    </ContentPage.BindingContext>
+
+   
+        <VerticalStackLayout Spacing="10" Padding="15">
+            <Label Text="Detalles del Proveedor" FontSize="24" HorizontalOptions="Center" />
+            <Label Text="NOTA: Para editar, seleccione la nota y modifique los campos, luego guarde" FontSize="20" HorizontalOptions="Center" />
+        <Entry Placeholder="Nombre" Text="{Binding  ProveedorSeleccionado.Nombre}" Keyboard="Text" />
+            <Entry Placeholder="Direccion" Text="{Binding ProveedorSeleccionado.Direccion}"/>
+            <Entry Placeholder="Telefono" Text="{Binding ProveedorSeleccionado.Telefono}" Keyboard="Numeric"/>
+            <Entry Placeholder="Email" Text="{Binding ProveedorSeleccionado.Email}" Keyboard="Email"/>
+            <Entry Placeholder="Productos" Text="{Binding ProveedorSeleccionado.Productos}" Keyboard="Email"/>
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text ="Guardar" Command="{Binding GuardarProveedorCommand}" BackgroundColor="LightPink"/>
+            <Button Text ="Nuevo" Command="{Binding CrearNuevoProveedorCommand}" BackgroundColor="DeepPink"/>
+            <Button Text ="Eliminar" Command="{Binding EliminarProveedorCommand}" BackgroundColor="Red"/>
+
+        </HorizontalStackLayout>
+
+        <CollectionView ItemsSource="{Binding ProveedoresCollection}" SelectedItem="{Binding ProveedorSeleccionado}" SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType ="models:Proveedor">
+                    <Frame Margin="5" Padding="10" CornerRadius="5">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Nombre}"/>
+                            <Label Text="{Binding Direccion}"/>
+                            <Label Text="{Binding Telefono}"/>
+                            <Label Text="{Binding Email}"/>
+                            <Label Text="{Binding Productos}"/>
+                        </VerticalStackLayout>
+                    </Frame>  
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
     </VerticalStackLayout>
-</ContentPage>
+    
+
+        
+</ContentPage> 
